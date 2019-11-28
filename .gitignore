@@ -27,5 +27,3 @@ target/
 /.nb-gradle/
 
 *.properties
-
-api_html/
