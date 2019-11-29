@@ -1,4 +1,4 @@
-package com.brliu.pojo;
+package com.brliu.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
