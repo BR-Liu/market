@@ -1,6 +1,6 @@
 package com.brliu.impl;
 
-import com.brliu.entity.Users;
+import com.brliu.domain.entity.Users;
 import com.brliu.mapper.UsersMapper;
 import com.brliu.service.UserService;
 import lombok.RequiredArgsConstructor;
