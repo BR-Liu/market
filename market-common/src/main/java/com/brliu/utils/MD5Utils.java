@@ -19,7 +19,6 @@ public class MD5Utils {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        String newstr = Base64.encodeBase64String(md5.digest(strValue.getBytes()));
-        return newstr;
+        return Base64.encodeBase64String(md5.digest(strValue.getBytes()));
     }
 }
