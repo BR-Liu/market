@@ -20,11 +20,9 @@ import java.util.Objects;
 @Slf4j
 @RestController
 @ResponseResult
-@RequestMapping("/login")
+@RequestMapping("/user")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class LoginController {
-
-    private final IdWorker idWorker;
+public class UserController {
 
     private final UserService userService;
 
@@ -40,7 +38,7 @@ public class LoginController {
         if (Objects.isNull(userBO)) {
             throw new RestMessageException(ResponseStateEnum.PARAM_ERROR, "注册用户参数为空");
         }
-        userBO.setId(String.valueOf(idWorker.nextId()));
+        userBO.setId(String.valueOf(IdWorker.getFlowIdWorkerInstance().nextId()));
         userBO.setPassword(MD5Utils.getMD5Str(userBO.getPassword()));
         userService.saveUser(BeanConverter.convert(userBO, Users.class));
     }

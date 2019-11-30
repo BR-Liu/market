@@ -2,7 +2,6 @@ package com.brliu.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 /**
  * tweeter的snowflake 移植到Java:
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Component;
  *       注意这里进行了小改动: snowkflake是5位的datacenter加5位的机器id; 这里变成使用10位的机器id
  *   (b) 对系统时间的依赖性非常强，需关闭ntp的时间同步功能。当检测到ntp时间调整后，将会拒绝分配id
  */
-@Component
 public class IdWorker {
 
     private final static Logger logger = LoggerFactory.getLogger(IdWorker.class);
