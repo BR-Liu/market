@@ -1,17 +1,17 @@
 package com.brliu.utils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
+ * 雪花算法
  * tweeter的snowflake 移植到Java:
- *   (a) id构成: 42位的时间前缀 + 10位的节点标识 + 12位的sequence避免并发的数字(12位不够用时强制得到新的时间前缀)
- *       注意这里进行了小改动: snowkflake是5位的datacenter加5位的机器id; 这里变成使用10位的机器id
- *   (b) 对系统时间的依赖性非常强，需关闭ntp的时间同步功能。当检测到ntp时间调整后，将会拒绝分配id
+ * (a) id构成: 42位的时间前缀 + 10位的节点标识 + 12位的sequence避免并发的数字(12位不够用时强制得到新的时间前缀)
+ * 注意这里进行了小改动: snowkflake是5位的datacenter加5位的机器id; 这里变成使用10位的机器id
+ * (b) 对系统时间的依赖性非常强，需关闭ntp的时间同步功能。当检测到ntp时间调整后，将会拒绝分配id
  */
+@Slf4j
 public class IdWorker {
-
-    private final static Logger logger = LoggerFactory.getLogger(IdWorker.class);
+    private static IdWorker flowIdWorker = new IdWorker(1);
 
     private final long workerId;
     private final long epoch = 1403854494756L;   // 时间起始标记点，作为基准，一般取系统的最近时间
@@ -44,7 +44,7 @@ public class IdWorker {
         }
 
         if (timestamp < this.lastTimestamp) {
-            logger.error(String.format("clock moved backwards.Refusing to generate id for %d milliseconds", (this.lastTimestamp - timestamp)));
+            log.error(String.format("clock moved backwards.Refusing to generate id for %d milliseconds", (this.lastTimestamp - timestamp)));
             //throw new IllegalAccessException(String.format("clock moved backwards.Refusing to generate id for %d milliseconds", (this.lastTimestamp - timestamp)));
         }
 
@@ -52,11 +52,9 @@ public class IdWorker {
         return timestamp - this.epoch << this.timestampLeftShift | this.workerId << this.workerIdShift | this.sequence;
     }
 
-    private static IdWorker flowIdWorker = new IdWorker(1);
     public static IdWorker getFlowIdWorkerInstance() {
         return flowIdWorker;
     }
-
 
 
     /**
