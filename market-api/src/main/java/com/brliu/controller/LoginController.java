@@ -5,6 +5,8 @@ import com.brliu.domain.bo.UserBO;
 import com.brliu.domain.entity.Users;
 import com.brliu.service.UserService;
 import com.brliu.utils.BeanConverter;
+import com.brliu.utils.IdWorker;
+import com.brliu.utils.MD5Utils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +22,8 @@ import java.util.Objects;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class LoginController {
 
+    private final IdWorker idWorker;
+
     private final UserService userService;
 
     @GetMapping("/username/exist")
@@ -32,6 +36,8 @@ public class LoginController {
     @PostMapping("/register")
     public void registerUser(UserBO userBO) {
         if (Objects.nonNull(userBO)) {
+            userBO.setId(String.valueOf(idWorker.nextId()));
+            userBO.setPassword(MD5Utils.getMD5Str(userBO.getPassword()));
             userService.saveUser(BeanConverter.convert(userBO, Users.class));
         }
     }
