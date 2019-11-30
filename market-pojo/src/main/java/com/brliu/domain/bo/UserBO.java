@@ -1,24 +1,18 @@
-package com.brliu.domain.entity;
+package com.brliu.domain.bo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import java.util.Date;
-
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Users {
+public class UserBO {
     /**
      * 主键id 用户id
      */
-    @Id
     private String id;
 
     /**
@@ -60,21 +54,4 @@ public class Users {
      * 性别 性别 1:男  0:女  2:保密
      */
     private Integer sex;
-
-    /**
-     * 生日 生日
-     */
-    private Date birthday;
-
-    /**
-     * 创建时间 创建时间
-     */
-    @Column(name = "created_time")
-    private Date createdTime;
-
-    /**
-     * 更新时间 更新时间
-     */
-    @Column(name = "updated_time")
-    private Date updatedTime;
 }

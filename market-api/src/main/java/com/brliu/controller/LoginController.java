@@ -1,15 +1,17 @@
 package com.brliu.controller;
 
 import com.brliu.annotation.ResponseResult;
+import com.brliu.domain.bo.UserBO;
+import com.brliu.domain.entity.Users;
 import com.brliu.service.UserService;
+import com.brliu.utils.BeanConverter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Objects;
 
 @Slf4j
 @RestController
@@ -26,4 +28,13 @@ public class LoginController {
             userService.queryUserNameExist(username);
         }
     }
+
+    @PostMapping("/register")
+    public void registerUser(UserBO userBO) {
+        if (Objects.nonNull(userBO)) {
+            userService.saveUser(BeanConverter.convert(userBO, Users.class));
+        }
+    }
+
+
 }
