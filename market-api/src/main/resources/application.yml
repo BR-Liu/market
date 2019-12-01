@@ -33,3 +33,6 @@ mapper:
   mappers: com.brliu.mymapper.MyMapper
   not-empty: false                #如果字段存在null则改为''
   identity: MYSQL
+
+web:
+  url: http://localhost:8080/

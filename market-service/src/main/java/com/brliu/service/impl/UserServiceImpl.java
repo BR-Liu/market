@@ -1,10 +1,10 @@
-package com.brliu.impl;
+package com.brliu.service.impl;
 
 import com.brliu.domain.entity.Users;
 import com.brliu.enums.ResponseStateEnum;
 import com.brliu.exception.RestMessageException;
 import com.brliu.mapper.UsersMapper;
-import com.brliu.service.UserService;
+import com.brliu.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

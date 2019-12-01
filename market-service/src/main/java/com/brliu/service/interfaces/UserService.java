@@ -1,4 +1,4 @@
-package com.brliu.service;
+package com.brliu.service.interfaces;
 
 import com.brliu.domain.entity.Users;
 

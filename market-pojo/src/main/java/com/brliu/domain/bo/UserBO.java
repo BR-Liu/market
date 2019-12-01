@@ -1,10 +1,13 @@
 package com.brliu.domain.bo;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@ApiModel(value = "用户对象",description = "封装前端传入的用户属性")
 @Data
 @Builder
 @NoArgsConstructor
@@ -18,6 +21,7 @@ public class UserBO {
     /**
      * 用户名 用户名
      */
+    @ApiModelProperty(value = "用户名")
     private String username;
 
     /**
