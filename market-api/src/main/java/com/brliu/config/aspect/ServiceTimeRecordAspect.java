@@ -21,6 +21,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class ServiceTimeRecordAspect {
 
+    /**
+     * 该方法为service层所有调用记录消耗时间
+     * @param joinPoint
+     * @throws Throwable
+     */
     @Around("execution(* com.brliu.service.impl..*.*(..))")
     public void recordServiceExecuteTime(ProceedingJoinPoint joinPoint) throws Throwable {
         log.info(
