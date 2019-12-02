@@ -33,8 +33,13 @@ mybatis:
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl   #这条配置使mybatis执行时的sql语句打印在控制台中
 mapper:
   mappers: com.brliu.mymapper.MyMapper
-  not-empty: false                #如果字段存在null则改为''
+  not-empty: false        #如果字段存在null则改为''
   identity: MYSQL
+
+# 分页插件配置
+pagehelper:
+  helperDialect: mysql
+  supportMethodsArguments: true
 
 web:
   url: http://localhost:8080/
