@@ -5,6 +5,7 @@ import com.brliu.enums.ResponseStateEnum;
 import com.brliu.exception.RestMessageException;
 import com.brliu.mapper.UsersMapper;
 import com.brliu.service.interfaces.UserService;
+import com.brliu.utils.MD5Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,5 +37,16 @@ public class UserServiceImpl implements UserService {
         if (usersMapper.insertSelective(users) != 1) {
             throw new RestMessageException(ResponseStateEnum.SERVER_ERROR, "保存用户失败");
         }
+    }
+
+    @Override
+    public Users checkPassword(String id, String password) {
+        return usersMapper.selectOneByExample(
+                Example.builder(Users.class)
+                        .where(WeekendSqls.<Users>custom()
+                                .andEqualTo(Users::getId, id)
+                                .andEqualTo(Users::getPassword, MD5Utils.getMD5Str(password)))
+                        .build()
+        );
     }
 }

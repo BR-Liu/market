@@ -6,4 +6,6 @@ public interface UserService {
     boolean queryUserNameExist(String username);
 
     void saveUser(Users users);
+
+    Users checkPassword(String id, String password);
 }
