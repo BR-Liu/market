@@ -40,6 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
     public Users checkPassword(String id, String password) {
         return usersMapper.selectOneByExample(
                 Example.builder(Users.class)

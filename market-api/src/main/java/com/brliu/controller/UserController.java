@@ -1,6 +1,5 @@
 package com.brliu.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.brliu.annotation.ResponseResult;
 import com.brliu.domain.bo.UserBO;
 import com.brliu.domain.entity.Users;
