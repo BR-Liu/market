@@ -1,4 +1,4 @@
-package com.brliu.config.configuration;
+package com.brliu.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
