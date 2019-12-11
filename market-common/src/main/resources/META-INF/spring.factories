@@ -1,0 +1,3 @@
+# 自动化装配跨域配置类
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.brliu.configuration.CorsConfiguration

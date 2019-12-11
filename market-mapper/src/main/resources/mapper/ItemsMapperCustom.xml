@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.brliu.mapper.ItemsMapperCustom" >
 
-  <select id="queryItemComments" parameterType="Map" resultType="com.brliu.pojo.vo.ItemCommentVO">
+  <select id="queryItemComments" parameterType="Map" resultType="com.brliu.domain.vo.ItemCommentVO">
     SELECT
         ic.comment_level as commentLevel,
         ic.content as content,
@@ -23,7 +23,7 @@
         </if>
   </select>
 
-    <select id="searchItems" parameterType="Map" resultType="com.brliu.pojo.vo.SearchItemsVO">
+    <select id="searchItems" parameterType="Map" resultType="com.brliu.domain.vo.SearchItemsVO">
         SELECT
             i.id as itemId,
             i.item_name as itemName,
@@ -63,7 +63,7 @@
     <!-- p: 根据价格排序-->
 
 
-    <select id="searchItemsByThirdCat" parameterType="Map" resultType="com.brliu.pojo.vo.SearchItemsVO">
+    <select id="searchItemsByThirdCat" parameterType="Map" resultType="com.brliu.domain.vo.SearchItemsVO">
         SELECT
             i.id as itemId,
             i.item_name as itemName,
@@ -99,7 +99,7 @@
     </select>
 
 
-    <select id="queryItemsBySpecIds" parameterType="List" resultType="com.brliu.pojo.vo.ShopcartVO">
+    <select id="queryItemsBySpecIds" parameterType="List" resultType="com.brliu.domain.vo.ShopcartVO">
         SELECT
             t_items.id as itemId,
             t_items.item_name as itemName,
