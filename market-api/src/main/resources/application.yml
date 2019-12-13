@@ -1,8 +1,3 @@
-server:
-  port: 8088
-  tomcat:
-    uri-encoding: UTF-8
-  max-http-header-size: 80KB
 ############################################################
 # 配置数据源信息
 ############################################################
@@ -10,9 +5,8 @@ spring:
   datasource:                                           # 数据源的相关配置
     type: com.zaxxer.hikari.HikariDataSource          # 数据源类型：HikariCP
     driver-class-name: com.mysql.cj.jdbc.Driver          # 根据官方建议mysql版本在8.0以上使用cj
-    url: jdbc:mysql://localhost:3306/foodie-shop-dev?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
     username: root
-    password: 75523342
+    # 数据源的相关配置
     hikari:
       connection-timeout: 30000       # 等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 默认:30秒
       minimum-idle: 5                 # 最小连接数
@@ -22,6 +16,8 @@ spring:
       pool-name: DateSourceHikariCP     # 连接池名字
       max-lifetime: 1800000           # 连接的生命时长（毫秒），超时而且没被使用则被释放（retired），默认:30分钟 1800000ms
       connection-test-query: SELECT 1
+  profiles:
+    active: dev
 
 ############################################################
 # mybatis 配置
