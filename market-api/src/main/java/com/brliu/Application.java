@@ -11,6 +11,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 public class Application {
     public static void main(String[] args) {
         ConfigurableApplicationContext context = new SpringApplicationBuilder(Application.class)
+                .profiles("local")
                 .web(WebApplicationType.SERVLET)
                 .run(args);
         //SpringApplication.run(Application.class, args);
