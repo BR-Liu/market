@@ -23,7 +23,7 @@ public class RedissonManagerConfig {
     @Value("${spring.redis.password}")
     private String password;
 
-    @Profile("local")
+    @Profile("dev")
     @Bean(name = "redissonClient")
     public RedissonClient redissonClientSingle() {
         RedissonClient redisson = null;
@@ -34,7 +34,7 @@ public class RedissonManagerConfig {
         return redisson;
     }
 
-    @Profile("pro")
+    @Profile("prod")
     @Bean(name = "redissonClient")
     public RedissonClient redissonClientCluster() {
         String[] nodes = clusters.split(",");

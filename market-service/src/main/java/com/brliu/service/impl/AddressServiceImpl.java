@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.weekend.WeekendSqls;
 
 import java.util.Date;
 import java.util.List;
@@ -48,15 +50,15 @@ public class AddressServiceImpl implements AddressService {
         String addressId = sid.nextShort();
 
         // 2. 保存地址到数据库
-        UserAddress newAddress = new UserAddress();
+        UserAddress newAddress = UserAddress.builder()
+                .id(addressId)
+                .isDefault(isDefault)
+                .createdTime(new Date())
+                .updatedTime(new Date())
+                .build();
         BeanUtils.copyProperties(addressBO, newAddress);
 
-        newAddress.setId(addressId);
-        newAddress.setIsDefault(isDefault);
-        newAddress.setCreatedTime(new Date());
-        newAddress.setUpdatedTime(new Date());
-
-        userAddressMapper.insert(newAddress);
+        userAddressMapper.insertSelective(newAddress);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -78,11 +80,13 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public void deleteUserAddress(String userId, String addressId) {
 
-        UserAddress address = new UserAddress();
-        address.setId(addressId);
-        address.setUserId(userId);
-
-        userAddressMapper.delete(address);
+        userAddressMapper.deleteByExample(
+                Example.builder(UserAddress.class)
+                        .where(WeekendSqls.<UserAddress>custom()
+                                .andEqualTo(UserAddress::getId, addressId)
+                                .andEqualTo(UserAddress::getUserId, userId))
+                        .build()
+        );
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -90,31 +94,38 @@ public class AddressServiceImpl implements AddressService {
     public void updateUserAddressToBeDefault(String userId, String addressId) {
 
         // 1. 查找默认地址，设置为不默认
-        UserAddress queryAddress = new UserAddress();
-        queryAddress.setUserId(userId);
-        queryAddress.setIsDefault(YesOrNoEnum.YES.type);
-        List<UserAddress> list = userAddressMapper.select(queryAddress);
+        List<UserAddress> list = userAddressMapper.selectByExample(
+                Example.builder(UserAddress.class)
+                        .where(WeekendSqls.<UserAddress>custom()
+                                .andEqualTo(UserAddress::getIsDefault, YesOrNoEnum.YES.type)
+                                .andEqualTo(UserAddress::getUserId, userId))
+                        .build()
+        );
         for (UserAddress ua : list) {
             ua.setIsDefault(YesOrNoEnum.NO.type);
             userAddressMapper.updateByPrimaryKeySelective(ua);
         }
 
         // 2. 根据地址id修改为默认的地址
-        UserAddress defaultAddress = new UserAddress();
-        defaultAddress.setId(addressId);
-        defaultAddress.setUserId(userId);
-        defaultAddress.setIsDefault(YesOrNoEnum.YES.type);
-        userAddressMapper.updateByPrimaryKeySelective(defaultAddress);
+        userAddressMapper.updateByPrimaryKeySelective(
+                UserAddress.builder()
+                        .id(addressId)
+                        .userId(userId)
+                        .isDefault(YesOrNoEnum.YES.type)
+                        .build()
+        );
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public UserAddress queryUserAddres(String userId, String addressId) {
 
-        UserAddress singleAddress = new UserAddress();
-        singleAddress.setId(addressId);
-        singleAddress.setUserId(userId);
-
-        return userAddressMapper.selectOne(singleAddress);
+        return userAddressMapper.selectOneByExample(
+                Example.builder(UserAddress.class)
+                        .where(WeekendSqls.<UserAddress>custom()
+                                .andEqualTo(UserAddress::getId, addressId)
+                                .andEqualTo(UserAddress::getUserId, userId))
+                        .build()
+        );
     }
 }
