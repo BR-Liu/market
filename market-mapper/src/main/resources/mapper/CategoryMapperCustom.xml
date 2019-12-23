@@ -13,7 +13,7 @@
       property：对应三级分类的list属性名
       ofType：集合的类型，三级分类的vo
     -->
-    <collection property="subCatList" ofType="com.brliu.domain.vo.SubCategoryVO">
+    <collection property="subCatList" ofType="com.brliu.domain.vo.SubCategoryVO" javaType="java.util.ArrayList">
       <id column="subId" property="subId"/>
       <result column="subName" property="subName"/>
       <result column="subType" property="subType"/>

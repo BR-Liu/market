@@ -121,7 +121,7 @@
     </select>
 
 
-    <select id="getMyOrderTrend" parameterType="Map" resultType="com.brliu.domain.OrderStatus">
+    <select id="getMyOrderTrend" parameterType="Map" resultType="com.brliu.domain.entity.OrderStatus">
 
         SELECT
             os.order_id as orderId,

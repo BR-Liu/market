@@ -14,7 +14,7 @@ import com.brliu.service.interfaces.ItemService;
 import com.brliu.service.interfaces.OrderService;
 import com.brliu.utils.DateUtil;
 import lombok.RequiredArgsConstructor;
-import org.n3r.idworker.Sid;
+import com.brliu.utils.Sid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;

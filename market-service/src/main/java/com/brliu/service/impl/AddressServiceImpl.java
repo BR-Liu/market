@@ -6,7 +6,7 @@ import com.brliu.enums.YesOrNoEnum;
 import com.brliu.mapper.UserAddressMapper;
 import com.brliu.service.interfaces.AddressService;
 import lombok.RequiredArgsConstructor;
-import org.n3r.idworker.Sid;
+import com.brliu.utils.Sid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,5 +1,7 @@
-package org.n3r.idworker;
+package com.brliu.utils;
 
+import org.n3r.idworker.IdWorker;
+import org.n3r.idworker.WorkerIdStrategy;
 import org.n3r.idworker.strategy.DefaultWorkerIdStrategy;
 import org.n3r.idworker.utils.Utils;
 import org.springframework.stereotype.Component;
@@ -10,7 +12,7 @@ import java.util.Date;
 @Component
 public class Sid {
     private static WorkerIdStrategy workerIdStrategy;
-    private static IdWorker idWorker;
+    private static org.n3r.idworker.IdWorker idWorker;
 
     static {
         configure(DefaultWorkerIdStrategy.instance);
