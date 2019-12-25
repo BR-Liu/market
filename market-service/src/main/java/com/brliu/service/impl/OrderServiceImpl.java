@@ -15,6 +15,7 @@ import com.brliu.service.interfaces.OrderService;
 import com.brliu.utils.DateUtil;
 import lombok.RequiredArgsConstructor;
 import com.brliu.utils.Sid;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -38,6 +39,8 @@ public class OrderServiceImpl implements OrderService {
     private final ItemService itemService;
 
     private final Sid sid;
+
+    private final RedissonClient redissonClient;
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
@@ -67,8 +70,6 @@ public class OrderServiceImpl implements OrderService {
                 + address.getDistrict() + " "
                 + address.getDetail());
 
-//        newOrder.setTotalAmount();
-//        newOrder.setRealPayAmount();
         newOrder.setPostAmount(postAmount);
 
         newOrder.setPayMethod(payMethod);
