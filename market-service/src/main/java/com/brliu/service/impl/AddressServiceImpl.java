@@ -118,7 +118,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
-    public UserAddress queryUserAddres(String userId, String addressId) {
+    public UserAddress queryUserAddress(String userId, String addressId) {
 
         return userAddressMapper.selectOneByExample(
                 Example.builder(UserAddress.class)

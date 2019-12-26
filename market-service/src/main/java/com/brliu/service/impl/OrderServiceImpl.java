@@ -1,5 +1,6 @@
 package com.brliu.service.impl;
 
+import com.brliu.domain.bo.ShopcartBO;
 import com.brliu.domain.bo.SubmitOrderBO;
 import com.brliu.domain.entity.*;
 import com.brliu.domain.vo.MerchantOrdersVO;
@@ -13,14 +14,15 @@ import com.brliu.service.interfaces.AddressService;
 import com.brliu.service.interfaces.ItemService;
 import com.brliu.service.interfaces.OrderService;
 import com.brliu.utils.DateUtil;
-import lombok.RequiredArgsConstructor;
 import com.brliu.utils.Sid;
+import lombok.RequiredArgsConstructor;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -44,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public OrderVO createOrder(SubmitOrderBO submitOrderBO) {
+    public OrderVO createOrder(SubmitOrderBO submitOrderBO, List<ShopcartBO> shoppingCartList) {
 
         String userId = submitOrderBO.getUserId();
         String addressId = submitOrderBO.getAddressId();
@@ -56,39 +58,37 @@ public class OrderServiceImpl implements OrderService {
 
         String orderId = sid.nextShort();
 
-        UserAddress address = addressService.queryUserAddres(userId, addressId);
+        UserAddress address = addressService.queryUserAddress(userId, addressId);
 
         // 1. 新订单数据保存
-        Orders newOrder = new Orders();
-        newOrder.setId(orderId);
-        newOrder.setUserId(userId);
-
-        newOrder.setReceiverName(address.getReceiver());
-        newOrder.setReceiverMobile(address.getMobile());
-        newOrder.setReceiverAddress(address.getProvince() + " "
-                + address.getCity() + " "
-                + address.getDistrict() + " "
-                + address.getDetail());
-
-        newOrder.setPostAmount(postAmount);
-
-        newOrder.setPayMethod(payMethod);
-        newOrder.setLeftMsg(leftMsg);
-
-        newOrder.setIsComment(YesOrNoEnum.NO.type);
-        newOrder.setIsDelete(YesOrNoEnum.NO.type);
-        newOrder.setCreatedTime(new Date());
-        newOrder.setUpdatedTime(new Date());
-
+        Orders newOrder = Orders.builder()
+                .id(orderId)
+                .userId(userId)
+                .receiverName(address.getReceiver())
+                .receiverMobile(address.getMobile())
+                .receiverAddress(address.getProvince() + " "
+                        + address.getCity() + " "
+                        + address.getDistrict() + " "
+                        + address.getDetail())
+                .postAmount(postAmount)
+                .payMethod(payMethod)
+                .leftMsg(leftMsg)
+                .isComment(YesOrNoEnum.NO.type)
+                .isDelete(YesOrNoEnum.NO.type)
+                .createdTime(new Date())
+                .updatedTime(new Date())
+                .build();
 
         // 2. 循环根据itemSpecIds保存订单商品信息表
         String itemSpecIdArr[] = itemSpecIds.split(",");
         Integer totalAmount = 0;    // 商品原价累计
         Integer realPayAmount = 0;  // 优惠后的实际支付价格累计
-        for (String itemSpecId : itemSpecIdArr) {
+        List<ShopcartBO> toBeRemovedShoppingCartList = new ArrayList<>();
 
-            // TODO 整合redis后，商品购买的数量重新从redis的购物车中获取
-            int buyCounts = 1;
+        for (String itemSpecId : itemSpecIdArr) {
+            ShopcartBO cartItem = getGoodsCountFromShoppingCart(shoppingCartList, itemSpecId);
+            int buyCounts = cartItem.getBuyCounts();
+            toBeRemovedShoppingCartList.add(cartItem);
 
             // 2.1 根据规格id，查询规格的具体信息，主要获取价格
             ItemsSpec itemSpec = itemService.queryItemSpecById(itemSpecId);
@@ -140,6 +140,7 @@ public class OrderServiceImpl implements OrderService {
         OrderVO orderVO = new OrderVO();
         orderVO.setOrderId(orderId);
         orderVO.setMerchantOrdersVO(merchantOrdersVO);
+        orderVO.setToBeRemovedShoppingCartList(toBeRemovedShoppingCartList);
 
         return orderVO;
     }
@@ -189,5 +190,17 @@ public class OrderServiceImpl implements OrderService {
         close.setOrderStatus(OrderStatusEnum.CLOSE.type);
         close.setCloseTime(new Date());
         orderStatusMapper.updateByPrimaryKeySelective(close);
+    }
+
+    /**
+     * 从redis中的购物车里获取商品，目的：counts
+     */
+    private ShopcartBO getGoodsCountFromShoppingCart(List<ShopcartBO> shoppingCartList, String specId) {
+        for (ShopcartBO cart : shoppingCartList) {
+            if (cart.getSpecId().equals(specId)) {
+                return cart;
+            }
+        }
+        return null;
     }
 }

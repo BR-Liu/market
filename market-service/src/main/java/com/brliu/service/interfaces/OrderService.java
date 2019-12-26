@@ -1,8 +1,11 @@
 package com.brliu.service.interfaces;
 
+import com.brliu.domain.bo.ShopcartBO;
 import com.brliu.domain.bo.SubmitOrderBO;
 import com.brliu.domain.entity.OrderStatus;
 import com.brliu.domain.vo.OrderVO;
+
+import java.util.List;
 
 public interface OrderService {
 
@@ -11,7 +14,7 @@ public interface OrderService {
      *
      * @param submitOrderBO
      */
-    OrderVO createOrder(SubmitOrderBO submitOrderBO);
+    OrderVO createOrder(SubmitOrderBO submitOrderBO, List<ShopcartBO> shoppingCartList);
 
     /**
      * 修改订单状态
