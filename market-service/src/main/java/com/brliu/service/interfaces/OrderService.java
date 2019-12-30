@@ -1,6 +1,6 @@
 package com.brliu.service.interfaces;
 
-import com.brliu.domain.bo.ShopcartBO;
+import com.brliu.domain.bo.ShoppingCartBO;
 import com.brliu.domain.bo.SubmitOrderBO;
 import com.brliu.domain.entity.OrderStatus;
 import com.brliu.domain.vo.OrderVO;
@@ -14,7 +14,7 @@ public interface OrderService {
      *
      * @param submitOrderBO
      */
-    OrderVO createOrder(SubmitOrderBO submitOrderBO, List<ShopcartBO> shoppingCartList);
+    OrderVO createOrder(SubmitOrderBO submitOrderBO, List<ShoppingCartBO> shoppingCartList);
 
     /**
      * 修改订单状态

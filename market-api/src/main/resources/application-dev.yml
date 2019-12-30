@@ -15,3 +15,7 @@ spring:
     host: 127.0.0.1
     port: 6379
     password: P@ssw0rd132
+
+pay:
+  center:
+    host: http://localhost:8071

@@ -8,7 +8,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ShopcartBO {
+public class ShoppingCartBO {
 
     private String itemId;
     private String itemImgUrl;

@@ -1,6 +1,6 @@
 package com.brliu.service.impl;
 
-import com.brliu.domain.bo.ShopcartBO;
+import com.brliu.domain.bo.ShoppingCartBO;
 import com.brliu.domain.bo.SubmitOrderBO;
 import com.brliu.domain.entity.*;
 import com.brliu.domain.vo.MerchantOrdersVO;
@@ -46,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public OrderVO createOrder(SubmitOrderBO submitOrderBO, List<ShopcartBO> shoppingCartList) {
+    public OrderVO createOrder(SubmitOrderBO submitOrderBO, List<ShoppingCartBO> shoppingCartList) {
 
         String userId = submitOrderBO.getUserId();
         String addressId = submitOrderBO.getAddressId();
@@ -83,10 +83,10 @@ public class OrderServiceImpl implements OrderService {
         String itemSpecIdArr[] = itemSpecIds.split(",");
         Integer totalAmount = 0;    // 商品原价累计
         Integer realPayAmount = 0;  // 优惠后的实际支付价格累计
-        List<ShopcartBO> toBeRemovedShoppingCartList = new ArrayList<>();
+        List<ShoppingCartBO> toBeRemovedShoppingCartList = new ArrayList<>();
 
         for (String itemSpecId : itemSpecIdArr) {
-            ShopcartBO cartItem = getGoodsCountFromShoppingCart(shoppingCartList, itemSpecId);
+            ShoppingCartBO cartItem = getGoodsCountFromShoppingCart(shoppingCartList, itemSpecId);
             int buyCounts = cartItem.getBuyCounts();
             toBeRemovedShoppingCartList.add(cartItem);
 
@@ -195,8 +195,8 @@ public class OrderServiceImpl implements OrderService {
     /**
      * 从redis中的购物车里获取商品，目的：counts
      */
-    private ShopcartBO getGoodsCountFromShoppingCart(List<ShopcartBO> shoppingCartList, String specId) {
-        for (ShopcartBO cart : shoppingCartList) {
+    private ShoppingCartBO getGoodsCountFromShoppingCart(List<ShoppingCartBO> shoppingCartList, String specId) {
+        for (ShoppingCartBO cart : shoppingCartList) {
             if (cart.getSpecId().equals(specId)) {
                 return cart;
             }

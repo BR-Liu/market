@@ -1,7 +1,7 @@
 package com.brliu.domain.vo;
 
 
-import com.brliu.domain.bo.ShopcartBO;
+import com.brliu.domain.bo.ShoppingCartBO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +17,6 @@ public class OrderVO {
 
     private String orderId;
     private MerchantOrdersVO merchantOrdersVO;
-    private List<ShopcartBO> toBeRemovedShoppingCartList;
+    private List<ShoppingCartBO> toBeRemovedShoppingCartList;
 
 }
