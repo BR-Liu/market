@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -70,11 +71,11 @@ public class Users {
      * 创建时间 创建时间
      */
     @Column(name = "created_time")
-    private Date createdTime;
+    private LocalDateTime createdTime;
 
     /**
      * 更新时间 更新时间
      */
     @Column(name = "updated_time")
-    private Date updatedTime;
+    private LocalDateTime updatedTime;
 }

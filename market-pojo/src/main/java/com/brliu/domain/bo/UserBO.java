@@ -13,49 +13,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserBO {
-    /**
-     * 主键id 用户id
-     */
-    private String id;
 
-    /**
-     * 用户名 用户名
-     */
-    @ApiModelProperty(value = "用户名")
+    @ApiModelProperty(value = "用户名", name = "username", example = "imooc", required = true)
     private String username;
 
-    /**
-     * 密码 密码
-     */
+    @ApiModelProperty(value = "密码", name = "password", example = "123456", required = true)
     private String password;
 
-    /**
-     * 昵称 昵称
-     */
-    private String nickname;
-
-    /**
-     * 真实姓名
-     */
-    private String realname;
-
-    /**
-     * 头像
-     */
-    private String face;
-
-    /**
-     * 手机号 手机号
-     */
-    private String mobile;
-
-    /**
-     * 邮箱地址 邮箱地址
-     */
-    private String email;
-
-    /**
-     * 性别 性别 1:男  0:女  2:保密
-     */
-    private Integer sex;
+    @ApiModelProperty(value = "确认密码", name = "confirmPassword", example = "123456", required = false)
+    private String confirmPassword;
 }
