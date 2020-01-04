@@ -8,6 +8,7 @@ import com.brliu.enums.YesOrNoEnum;
 import com.brliu.service.interfaces.CarouselService;
 import com.brliu.service.interfaces.CategoryService;
 import com.brliu.utils.JsonUtils;
+import com.brliu.utils.RedisClient;
 import com.brliu.utils.ResponseMessage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,16 +37,16 @@ public class IndexController {
     private CategoryService categoryService;
 
     @Autowired
-    private RedissonClient redissonClient;
+    private RedisClient redisClient;
 
     @ApiOperation(value = "获取首页轮播图列表", notes = "获取首页轮播图列表", httpMethod = "GET")
     @GetMapping("/carousel")
     public ResponseMessage carousel() {
         List<Carousel> list;
-        String carouselStr = (String) redissonClient.getBucket("carousel").get();
+        String carouselStr = redisClient.get("carousel");
         if (StringUtils.isBlank(carouselStr)) {
             list = carouselService.queryAll(YesOrNoEnum.YES.type);
-            redissonClient.getBucket("carousel").set(JsonUtils.objectToJson(list));
+            redisClient.set("carousel", JsonUtils.objectToJson(list));
         } else {
             list = JsonUtils.jsonToList(carouselStr, Carousel.class);
         }
@@ -68,9 +69,9 @@ public class IndexController {
     @GetMapping("/cats")
     public ResponseMessage cats() {
         List<Category> list = new ArrayList<>();
-        String catsStr = (String) redissonClient.getBucket("cats").get();
+        String catsStr =  redisClient.get("cats");
         if (StringUtils.isBlank(catsStr)) {
-            redissonClient.getBucket("cats").set(JsonUtils.objectToJson(list));
+            redisClient.set("cats", JsonUtils.objectToJson(list));
         } else {
             list = JsonUtils.jsonToList(catsStr, Category.class);
         }
@@ -88,7 +89,7 @@ public class IndexController {
         }
 
         List<CategoryVO> list;
-        String catsStr = (String) redissonClient.getBucket("subCat:" + rootCatId).get();
+        String catsStr = redisClient.get("subCat:" + rootCatId);
         if (StringUtils.isBlank(catsStr)) {
             list = categoryService.getSubCatList(rootCatId);
             /**
@@ -100,9 +101,9 @@ public class IndexController {
              * 解决方案：把空的数据也缓存起来，比如空字符串，空对象，空数组或list
              */
             if (list != null && list.size() > 0) {
-                redissonClient.getBucket("subCat:" + rootCatId).set(JsonUtils.objectToJson(list));
+                redisClient.set("subCat:" + rootCatId, JsonUtils.objectToJson(list));
             } else {
-                redissonClient.getBucket("subCat:" + rootCatId).set(JsonUtils.objectToJson(list), 5 * 60, TimeUnit.SECONDS);
+                redisClient.set("subCat:" + rootCatId, JsonUtils.objectToJson(list), 5 * 60, TimeUnit.SECONDS);
             }
         } else {
             list = JsonUtils.jsonToList(catsStr, CategoryVO.class);
