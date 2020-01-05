@@ -40,7 +40,7 @@ public class CenterUserBO {
     private String mobile;
 
     @Email
-    @ApiModelProperty(value="邮箱地址", name="email", example="imooc@imooc.com", required = false)
+    @ApiModelProperty(value="邮箱地址", name="email", example="test@163.com", required = false)
     private String email;
 
     @Min(value = 0, message = "性别选择不正确")
