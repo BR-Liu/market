@@ -8,6 +8,7 @@ import com.brliu.service.interfaces.UserService;
 import com.brliu.utils.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +23,12 @@ import java.util.List;
 @RestController
 @ResponseResult
 @RequestMapping("passport")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class LoginController extends BaseController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private RedisClient redisClient;
+    private final RedisClient redisClient;
 
     @ApiOperation(value = "用户名是否存在", notes = "用户名是否存在", httpMethod = "GET")
     @GetMapping("/usernameIsExist")

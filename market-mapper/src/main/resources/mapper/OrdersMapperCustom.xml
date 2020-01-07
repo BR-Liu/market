@@ -70,35 +70,35 @@
 
     <select id="queryMyOrdersDoNotUse" resultMap="myOrdersVO" parameterType="Map">
         SELECT
-        od.id as orderId,
-        od.created_time as createdTime,
-        od.pay_method as payMethod,
-        od.real_pay_amount as realPayAmount,
-        od.post_amount as postAmount,
-        os.order_status as orderStatus,
-        oi.item_id as itemId,
-        oi.item_name as itemName,
-        oi.item_img as itemImg,
-        oi.item_spec_name as itemSpecName,
-        oi.buy_counts as buyCounts,
-        oi.price as price
+            od.id as orderId,
+            od.created_time as createdTime,
+            od.pay_method as payMethod,
+            od.real_pay_amount as realPayAmount,
+            od.post_amount as postAmount,
+            os.order_status as orderStatus,
+            oi.item_id as itemId,
+            oi.item_name as itemName,
+            oi.item_img as itemImg,
+            oi.item_spec_name as itemSpecName,
+            oi.buy_counts as buyCounts,
+            oi.price as price
         FROM
-        orders od
+            orders od
         LEFT JOIN
-        order_status os
+            order_status os
         on od.id = os.order_id
         LEFT JOIN
-        order_items oi
+            order_items oi
         ON od.id = oi.order_id
         WHERE
-        od.user_id = #{paramsMap.userId}
+            od.user_id = #{paramsMap.userId}
         AND
-        od.is_delete = 0
+            od.is_delete = 0
         <if test="paramsMap.orderStatus != null">
             and os.order_status = #{paramsMap.orderStatus}
         </if>
         ORDER BY
-        od.updated_time ASC
+            od.updated_time ASC
     </select>
 
 

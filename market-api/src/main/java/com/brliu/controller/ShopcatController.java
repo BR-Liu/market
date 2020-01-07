@@ -8,6 +8,7 @@ import com.brliu.utils.JsonUtils;
 import com.brliu.utils.RedisClient;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,10 @@ import java.util.List;
 @RequestMapping("shopcart")
 @ResponseResult
 @RestController
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ShopcatController extends BaseController {
 
-    @Autowired
-    private RedisClient redisClient;
+    private final RedisClient redisClient;
 
     @ApiOperation(value = "添加商品到购物车", notes = "添加商品到购物车", httpMethod = "POST")
     @PostMapping("/add")

@@ -8,6 +8,7 @@ import com.brliu.utils.MobileEmailUtils;
 import com.brliu.utils.ResponseMessage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(value = "地址相关", tags = {"地址相关的api接口"})
 @RequestMapping("address")
 @RestController
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class AddressController {
 
     /**
@@ -26,8 +28,7 @@ public class AddressController {
      * 5. 设置默认地址
      */
 
-    @Autowired
-    private AddressService addressService;
+    private final AddressService addressService;
 
     @ApiOperation(value = "根据用户id查询收货地址列表", notes = "根据用户id查询收货地址列表", httpMethod = "POST")
     @PostMapping("/list")

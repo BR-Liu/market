@@ -11,10 +11,10 @@ import java.io.File;
 @Controller
 public class BaseController {
 
-    public static final String FOODIE_SHOPCART = "shopcart";
+    static final String FOODIE_SHOPCART = "shopcart";
 
-    public static final Integer COMMON_PAGE_SIZE = 10;
-    public static final Integer PAGE_SIZE = 20;
+    static final Integer COMMON_PAGE_SIZE = 10;
+    static final Integer PAGE_SIZE = 20;
 
     // 支付中心的调用地址
     String paymentUrl = "http://localhost:8071";		// produce

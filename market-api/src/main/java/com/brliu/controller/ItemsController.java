@@ -14,6 +14,7 @@ import com.brliu.utils.ResponseMessage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,10 +25,10 @@ import java.util.List;
 @RestController
 @ResponseResult
 @RequestMapping("items")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ItemsController extends BaseController {
 
-    @Autowired
-    private ItemService itemService;
+    private final ItemService itemService;
 
     @ApiOperation(value = "查询商品详情", notes = "查询商品详情", httpMethod = "GET")
     @GetMapping("/info/{itemId}")

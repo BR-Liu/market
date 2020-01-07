@@ -13,6 +13,7 @@ import com.brliu.utils.ResponseMessage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,16 +29,14 @@ import java.util.concurrent.TimeUnit;
 @Api(value = "首页", tags = {"首页展示的相关接口"})
 @RestController
 @RequestMapping("index")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class IndexController {
 
-    @Autowired
-    private CarouselService carouselService;
+    private final CarouselService carouselService;
 
-    @Autowired
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
 
-    @Autowired
-    private RedisClient redisClient;
+    private final RedisClient redisClient;
 
     @ApiOperation(value = "获取首页轮播图列表", notes = "获取首页轮播图列表", httpMethod = "GET")
     @GetMapping("/carousel")
