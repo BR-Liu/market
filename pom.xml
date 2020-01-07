@@ -19,6 +19,7 @@
         <module>market-mapper</module>
         <module>market-service</module>
         <module>market-api</module>
+        <module>market-sso</module>
     </modules>
 
     <properties>
