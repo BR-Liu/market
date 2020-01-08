@@ -35,5 +35,12 @@ public class RedisClient {
         redissonClient.getBucket(id).set(value, expireTime, unit);
     }
 
+    /**
+     * 删除键
+     */
+    public void delete(String id) {
+        redissonClient.getBucket(id).delete();
+    }
+
 
 }

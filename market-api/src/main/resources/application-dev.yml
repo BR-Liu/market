@@ -8,7 +8,7 @@ server:
 ############################################################
 spring:
   datasource:                                           # 数据源的相关配置
-    url: jdbc:mysql://localhost:3306/foodie-shop-dev?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
+    url: jdbc:mysql://localhost:3306/market?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
     password: 75523342
   redis:                    #redis相关配置
     database: 1
