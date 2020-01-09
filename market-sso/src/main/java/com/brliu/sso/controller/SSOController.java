@@ -93,8 +93,7 @@ public class SSOController {
                           String password,
                           String returnUrl,
                           Model model,
-                          HttpServletRequest request,
-                          HttpServletResponse response) throws Exception {
+                          HttpServletResponse response) {
 
         model.addAttribute("returnUrl", returnUrl);
 
@@ -154,8 +153,7 @@ public class SSOController {
     @PostMapping("/verifyTmpTicket")
     @ResponseBody
     public ResponseMessage verifyTmpTicket(String tmpTicket,
-                                           HttpServletRequest request,
-                                           HttpServletResponse response) throws Exception {
+                                           HttpServletRequest request) {
 
         // 使用一次性临时票据来验证用户是否登录，如果登录过，把用户会话信息返回给站点
         // 使用完毕后，需要销毁临时票据
@@ -193,7 +191,7 @@ public class SSOController {
     @ResponseBody
     public ResponseMessage logout(String userId,
                                   HttpServletRequest request,
-                                  HttpServletResponse response) throws Exception {
+                                  HttpServletResponse response) {
 
         // 0. 获取CAS中的用户门票
         String userTicket = getCookie(request, COOKIE_USER_TICKET);

@@ -1,5 +1,6 @@
 package com.brliu.utils;
 
+import lombok.RequiredArgsConstructor;
 import org.redisson.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -7,17 +8,16 @@ import org.springframework.stereotype.Component;
 import java.util.concurrent.TimeUnit;
 
 @Component
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class RedisClient {
 
-    @Autowired
-    private RedissonClient redissonClient;
+    private final RedissonClient redissonClient;
 
     /**
      * 获取字符串对象
      */
     public String get(String id) {
-        String value = (String) redissonClient.getBucket(id).get();
-        return value;
+        return (String) redissonClient.getBucket(id).get();
     }
 
     /**
