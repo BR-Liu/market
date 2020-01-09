@@ -4,7 +4,6 @@
 #
 ############################################################
 server:
-#  port: 8088
   tomcat:
     uri-encoding: UTF-8
   max-http-header-size: 80KB
