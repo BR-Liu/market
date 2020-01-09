@@ -1,4 +1,4 @@
-package com.brliu.config.configuration;
+package com.brliu.configuration;
 
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
@@ -17,16 +17,16 @@ public class RedissonManagerConfig {
     @Value("${spring.redis.port}")
     private String port;
 
-    @Value("${spring.redis.clusters}")
-    private String clusters;
+    @Value("${spring.redis.cluster.nodes}")
+    private String cluster;
 
     @Value("${spring.redis.password}")
     private String password;
 
     @Profile("dev")
-    @Bean(name = "redissonClient")
+    @Bean(name = "RedissonClient")
     public RedissonClient redissonClientSingle() {
-        RedissonClient redisson = null;
+        RedissonClient redisson;
         Config config = new Config();
         config.useSingleServer().setAddress("redis://" + url + ":" + port);
         redisson = Redisson.create(config);
@@ -35,9 +35,9 @@ public class RedissonManagerConfig {
     }
 
     @Profile("prod")
-    @Bean(name = "redissonClient")
+    @Bean(name = "RedissonClient")
     public RedissonClient redissonClientCluster() {
-        String[] nodes = clusters.split(",");
+        String[] nodes = cluster.split(",");
         // redisson版本是3.5，集群的ip前面要加上“redis://”，不然会报错，3.2版本可不加
         for (int i = 0; i < nodes.length; i++) {
             nodes[i] = "redis://" + nodes[i];

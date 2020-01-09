@@ -7,7 +7,7 @@ spring:
     password: 75523342
   redis:
     # Redis 单机单实例
-    database: 0
+    database: 2
     host: 127.0.0.1
     port: 6379
     password: P@ssw0rd132
@@ -19,9 +19,12 @@ spring:
 #      nodes: 192.168.1.191:26379,192.168.1.192:26379,192.168.1.193:26379
     # Redis 集群模式
 #    password: P@ssw0rd132
-#    cluster:
-#      nodes: 192.168.1.201:6379,192.168.1.202:6379,192.168.1.203:6379,192.168.1.204:6379,192.168.1.205:6379,192.168.1.206:6379
+    cluster:
+      nodes: 192.168.1.201:6379,192.168.1.202:6379,192.168.1.203:6379,192.168.1.204:6379,192.168.1.205:6379,192.168.1.206:6379
 
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+web:
+  url: http://localhost:8080/

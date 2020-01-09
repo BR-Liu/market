@@ -1,4 +1,4 @@
-package com.brliu.sso.controller;
+package com.brliu.controller;
 
 import com.brliu.domain.entity.Users;
 import com.brliu.domain.vo.UsersVO;
