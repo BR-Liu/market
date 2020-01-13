@@ -21,3 +21,8 @@ spring:
 pay:
   center:
     host: http://localhost:8071
+
+rocketmq:
+  namesvr-host: 134.175.146.252
+  namesvr-port: 9876
+  producer-group: pay-test
