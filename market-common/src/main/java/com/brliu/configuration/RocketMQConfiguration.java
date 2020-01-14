@@ -1,6 +1,8 @@
 package com.brliu.configuration;
 
+import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
+import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,5 +26,14 @@ public class RocketMQConfiguration {
         defaultMQProducer.setProducerGroup(provider_group);
         return defaultMQProducer;
     }
+
+    @Bean(name = "DefaultMQConsumer")
+    public DefaultMQPushConsumer getDefaultMQConsumer() {
+        DefaultMQPushConsumer defaultMQConsumer = new DefaultMQPushConsumer();
+        defaultMQConsumer.setNamesrvAddr(host + ":" + port);
+        defaultMQConsumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_LAST_OFFSET);
+        return defaultMQConsumer;
+    }
+
 
 }
