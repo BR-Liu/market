@@ -1,4 +1,4 @@
-package com.brliu.test;
+package com.brliu.search.test;
 
 
 import com.brliu.Application;

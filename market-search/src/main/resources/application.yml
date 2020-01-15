@@ -7,4 +7,4 @@ spring:
   data:
     elasticsearch:
       cluster-name: elasticsearch_br_liu
-      cluster-nodes: 127.0.0.1:9200
+      cluster-nodes: 127.0.0.1:9300
