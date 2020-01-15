@@ -20,6 +20,7 @@
         <module>market-service</module>
         <module>market-api</module>
         <module>market-sso</module>
+        <module>market-search</module>
     </modules>
 
     <properties>

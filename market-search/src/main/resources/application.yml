@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver          # 根据官方建议mysql版本在8.0以上使用cj
+    username: root
+    url: jdbc:mysql://localhost:3306/market?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
+    password: 75523342
+  data:
+    elasticsearch:
+      cluster-name: elasticsearch_br_liu
+      cluster-nodes: 127.0.0.1:9200
