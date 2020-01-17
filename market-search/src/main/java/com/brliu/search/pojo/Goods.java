@@ -9,6 +9,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import java.math.BigDecimal;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -27,4 +29,7 @@ public class Goods {
 
     @Field(store = true, index = false)
     private String goodsCount;
+
+    @Field(store = true)
+    private BigDecimal goodsPrice;
 }
