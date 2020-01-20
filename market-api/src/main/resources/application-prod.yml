@@ -1,0 +1,28 @@
+server:
+  port: 8088
+  tomcat:
+    uri-encoding: UTF-8
+  max-http-header-size: 80KB
+############################################################
+# 配置数据源信息
+############################################################
+spring:
+  datasource:                                           # 数据源的相关配置
+    url: jdbc:mysql://localhost:3306/market?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
+    password: 75523342
+  redis:                    #redis相关配置
+    database: 1
+    host: 127.0.0.1
+    port: 6379
+    password: P@ssw0rd132
+#    cluster:
+#      nodes: 127.0.0.1:6379
+
+pay:
+  center:
+    host: http://localhost:8071
+
+rocketmq:
+  namesvr-host: 134.175.146.252
+  namesvr-port: 9876
+  producer-group: pay-test
