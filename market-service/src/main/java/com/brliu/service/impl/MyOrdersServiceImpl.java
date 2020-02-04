@@ -107,7 +107,7 @@ public class MyOrdersServiceImpl extends BaseService implements MyOrdersService 
 
         int result = orderStatusMapper.updateByExampleSelective(updateOrder, example);
 
-        return result == 1 ? true : false;
+        return result == 1;
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -125,7 +125,7 @@ public class MyOrdersServiceImpl extends BaseService implements MyOrdersService 
 
         int result = ordersMapper.updateByExampleSelective(updateOrder, example);
 
-        return result == 1 ? true : false;
+        return result == 1;
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
