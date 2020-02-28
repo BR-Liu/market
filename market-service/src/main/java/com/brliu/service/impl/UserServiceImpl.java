@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
                                 .andEqualTo(Users::getUsername, username))
                         .build()
         );
-        return count == 1 ? true : false;
+        return count == 1;
     }
 
     @Override
