@@ -15,12 +15,12 @@ import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class MessageProvider {
+public class OrderMessageProvider {
 
     private RabbitTemplate rabbitTemplate;
 
-    private final RabbitTemplate.ConfirmCallback confirmCallback = (correlationData, b, s) -> {
-        if (b) {
+    private final RabbitTemplate.ConfirmCallback confirmCallback = (correlationData, confirmFlag, s) -> {
+        if (confirmFlag) {
             System.out.println("ok");
         }
     };
@@ -32,7 +32,7 @@ public class MessageProvider {
         rabbitTemplate.setConfirmCallback(confirmCallback);
         CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
 
-        rabbitTemplate.convertAndSend("exchange_1",
+        rabbitTemplate.convertAndSend("order_1",
                 "order.*",
                 msg,
                 message1 -> {

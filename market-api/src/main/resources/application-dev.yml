@@ -26,10 +26,18 @@ spring:
     password: guest
     virtual-host: /market
     connection-timeout: 15000
+    #生产者部分
     publisher-confirms: true #开启消息发布确认机制
     publisher-returns: true  #设置return消息模式,该配置与template.mandatory联合使用
     template:
       mandatory: true
+    #消费者部分
+    listener:
+      simple:
+        acknowledge-mode: manual #设置消费之后手动签收
+        concurrency: 5
+        max-concurrency: 10
+        prefetch: 1
 
 pay:
   center:
