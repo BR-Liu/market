@@ -21,6 +21,7 @@
         <module>market-api</module>
         <module>market-sso</module>
         <module>market-search</module>
+        <module>market-rabbit</module>
     </modules>
 
     <properties>
