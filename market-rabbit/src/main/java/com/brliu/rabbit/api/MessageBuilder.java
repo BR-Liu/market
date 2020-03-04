@@ -1,6 +1,6 @@
 package com.brliu.rabbit.api;
 
-import com.brliu.rabbit.api.exception.MessageException;
+import com.brliu.rabbit.api.exception.MessageRuntimeException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -68,7 +68,7 @@ public class MessageBuilder {
             this.messageId = UUID.randomUUID().toString();
         }
         if (Objects.isNull(topic)) {
-            throw new MessageException("未设置消息主题");
+            throw new MessageRuntimeException("未设置消息主题");
         }
         return new Message(messageId, topic, routingKey, attributes, delayMills, messageType);
     }

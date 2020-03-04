@@ -1,8 +1,8 @@
 package com.brliu.rabbit.api.exception;
 
-public class MessageException extends RuntimeException {
+public class MessageException extends Exception {
 
-    private static final long serialVersionUID = -1274988344127687250L;
+    private static final long serialVersionUID = 1336293688514957424L;
 
     public MessageException() {
 
