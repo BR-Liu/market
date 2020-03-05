@@ -61,7 +61,6 @@ public class RabbitBrokerImpl implements RabbitBroker {
         AsyncBaseQueue.submit(() -> {
             String msgId = message.getMessageId();
             CorrelationData correlationData = new CorrelationData(String.format("%s#%s", msgId, System.currentTimeMillis()));
-            String topic = message.getTopic();
             String routingKey = message.getRoutingKey();
             RabbitTemplate template = rabbitTemplateContainer.getTemplate(message);
             template.convertAndSend(routingKey, message, correlationData);

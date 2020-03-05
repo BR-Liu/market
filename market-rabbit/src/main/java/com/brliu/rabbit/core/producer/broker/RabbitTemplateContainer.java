@@ -2,6 +2,11 @@ package com.brliu.rabbit.core.producer.broker;
 
 import com.brliu.rabbit.api.Message;
 import com.brliu.rabbit.api.MessageType;
+import com.brliu.rabbit.common.convert.GenericMessageConverter;
+import com.brliu.rabbit.common.convert.RabbitMessageConverter;
+import com.brliu.rabbit.common.serializer.Serializer;
+import com.brliu.rabbit.common.serializer.SerializerFactory;
+import com.brliu.rabbit.common.serializer.impl.JacksonSerializerFactory;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Maps;
@@ -33,6 +38,8 @@ public class RabbitTemplateContainer implements RabbitTemplate.ConfirmCallback {
 
     private Splitter idSplitter = Splitter.on("#");
 
+    private SerializerFactory serializerFactory = JacksonSerializerFactory.INSTANCE;
+
     public RabbitTemplate getTemplate(Message message) {
         Preconditions.checkNotNull(message);
         String topic = message.getTopic();
@@ -43,7 +50,9 @@ public class RabbitTemplateContainer implements RabbitTemplate.ConfirmCallback {
         log.info("#RabbitTemplateContainer.getTemplate# current topic : {} does not have a template ,creating now", topic);
         RabbitTemplate newTemplate = new RabbitTemplate(connectionFactory);
         newTemplate.setExchange(topic);
-        //newTemplate.setMessageConverter(); 序列化
+        GenericMessageConverter genericMessageConverter = new GenericMessageConverter(serializerFactory.create());
+        RabbitMessageConverter rabbitMessageConverter = new RabbitMessageConverter(genericMessageConverter);
+        newTemplate.setMessageConverter(rabbitMessageConverter);  //序列化
         String msgType = message.getMessageType();
         if (MessageType.RAPID.equals(msgType)) {
             assert false;
