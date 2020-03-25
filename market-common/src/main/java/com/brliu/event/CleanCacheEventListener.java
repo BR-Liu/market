@@ -3,13 +3,13 @@ package com.brliu.event;
 import lombok.RequiredArgsConstructor;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 
-@Component
+import java.util.EventListener;
+
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class CleanCacheEventListener {
+public class CleanCacheEventListener implements EventListener {
 
     private final RedissonClient redissonClientSingle;
 
